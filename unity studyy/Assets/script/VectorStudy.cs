@@ -3,9 +3,9 @@ using UnityEngine;
 public class VectorStudy : MonoBehaviour
 {
 
-    //public Vector2 v2 = new Vector2(10,10); 
-    //public Vector3 v3 = new Vector3(1,1,1);
-    
+    public Vector2 v2 = new Vector2(10, 10);
+    public Vector3 v3 = new Vector3(1, 1, 1);
+
 
 
 
@@ -28,17 +28,17 @@ public class VectorStudy : MonoBehaviour
 
         //Debug.Log("Vactor" + c);
 
-        //Debug.Log("±æÀÌ : " + c.magnitude);
+        //Debug.Log("ê¸¸ì´ : " + c.magnitude);
 
 
 
-        //Á¤±ÔÈ­ normalize
-        //¹éÅÍÀÇ Å©±â¸¦ 1·Î ¸¸µé°í ¹æÇâ¸¸ À¯Áö
-        Vector3 a = new Vector3(3, 0, 0);
+        //ì •ê·œí™” normalize
+        //ë°±í„°ì˜ í¬ê¸°ë¥¼ 1ë¡œ ë§Œë“¤ê³  ë°©í–¥ë§Œ ìœ ì§€
+        //Vector3 a = new Vector3(3, 0, 0);
 
-        Vector3 normalizedVector = a.normalized;
+        //Vector3 normalizedVector = a.normalized;
 
-        Debug.Log("1ÀÇ±æÀÌ ¹æÇâ¸¸ ¼³Á¤ÇÏ´Â Á¤±ÔÈ­ : " + normalizedVector);
+        //Debug.Log("1ì˜ê¸¸ì´ ë°©í–¥ë§Œ ì„¤ì •í•˜ëŠ” ì •ê·œí™” : " + normalizedVector);
 
 
 
