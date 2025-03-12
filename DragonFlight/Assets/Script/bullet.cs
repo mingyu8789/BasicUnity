@@ -32,18 +32,19 @@ public class bullet : MonoBehaviour
         //if (collision.gameObject.tag == "Enemy")
         if (collision.gameObject.CompareTag("Enemy"))   //이게 더 안전하다고 함
         {
-                //폭발 이펙트 생성
-                Instantiate(exposion, transform.position, Quaternion.identity);
-                //죽음사운드
-                SoundManager.instance.SoundDie(); //적 죽음 사운드
-                GameManger.intance.AddScore(10);
-
-                //적 지우기
-                Destroy(collision.gameObject);
-                //총알 지우기
-                Destroy(gameObject);
+            //폭발 이펙트 생성
+            Instantiate(exposion, transform.position, Quaternion.identity);
+            //죽음사운드
+            SoundManager.instance.SoundDie(); //적 죽음 사운드
+            //점수올려주기
+            GameManger.intance.AddScore(10);
+            //적지우기
+            Destroy(collision.gameObject);
+            //총알 지우기 자기자신
+            Destroy(gameObject);
         }
-        else if (collision.gameObject.CompareTag("Enemy2"))
+        
+        if (collision.gameObject.CompareTag("Enemy2"))
         {
             //폭발 이펙트 생성
             Instantiate(exposion, transform.position, Quaternion.identity);
