@@ -18,8 +18,17 @@ public class PlayerBullet_A : MonoBehaviour
     }
 
 
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.CompareTag("Monster"))
+        {
+            GameObject boom = Instantiate(effect, transform.position, Quaternion.identity);
+            Destroy(boom, 1);   //1초뒤에 지우기
+
+            //collision.gameObject.GetComponent<Monster>().Damage(1);
+
+            Destroy(gameObject);
+        }
     }
+
 }
