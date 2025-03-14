@@ -108,6 +108,7 @@ MonoBehaviour:
   ms1: {fileID: 4894372629151586057}
   ms2: {fileID: 5193477795842975582}
   bullet: {fileID: 4433540947881357938, guid: 94b42a6a419a2aa48aca7ba2abf1915a, type: 3}
+  Item: {fileID: 8098267678798792430, guid: 24153e5b60f4d3c4f8db500262770e9b, type: 3}
 --- !u!61 &555397727052130847
 BoxCollider2D:
   m_ObjectHideFlags: 0

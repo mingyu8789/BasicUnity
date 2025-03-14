@@ -1,7 +1,7 @@
+using System.Threading;
 using UnityEngine;
-using static UnityEditor.Progress;
 
-public class Bullet : MonoBehaviour
+public class bullet : MonoBehaviour
 {
     public float Speed = 4.0f;
     //공격력
@@ -30,16 +30,33 @@ public class Bullet : MonoBehaviour
         if (collision.CompareTag("Monster"))
         {
             //이펙트생성
-            GameObject go = Instantiate(effect, collision.transform.position, Quaternion.identity); //collision.transform.position를 이동 값에 넣으면 대상의 위치에서 모션을 생성!
+            GameObject go = Instantiate(effect, transform.position, Quaternion.identity);
             //1초뒤에 지우기
-            Destroy(go, 1); //1초뒤에 지워준다
+            Destroy(go, 1);
 
-            //몬스터 삭제
-            Destroy(collision.gameObject);
+            //몬스터삭제
+            collision.gameObject.GetComponent<monster_5>().Damage(1);
 
             //미사일 삭제
             Destroy(gameObject);
+
+        }
+
+
+
+        if (collision.CompareTag("boss"))
+        {
+            //이펙트생성
+            GameObject go = Instantiate(effect, transform.position, Quaternion.identity);
+            //1초뒤에 지우기
+            Destroy(go, 1);
+
+            //미사일 삭제
+            Destroy(gameObject);
+
         }
     }
+
+
 
 }

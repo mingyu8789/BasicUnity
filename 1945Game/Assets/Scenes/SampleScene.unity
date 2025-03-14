@@ -1003,8 +1003,8 @@ MonoBehaviour:
   ss: -2
   es: 2
   StartTime: 1
-  SpawnStop: 10
-  SpawnStop2: 10
+  SpawnStop: 5
+  SpawnStop2: 5
   monster: {fileID: 5396171006466956670, guid: 38e76d2788d82c14a98f1674e0225214, type: 3}
   monster2: {fileID: 5979888343481125564, guid: 291882d284511664ea33548fbc8c1f4a, type: 3}
 --- !u!4 &1714023312
@@ -1056,8 +1056,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  bullet: {fileID: 4934877818195562091, guid: 6f2028226950aac4d99f24fe5a1d1b1c, type: 3}
+  bullet:
+  - {fileID: 1248197672098519935, guid: 03f95a34f6769fc47b773d0ad507392d, type: 3}
+  - {fileID: 785803119986148413, guid: dc81c43f245cbe643af7aedec5775e5c, type: 3}
+  - {fileID: 8048252479119896153, guid: 3d6163dff7a518a47a734a1d8197e252, type: 3}
+  - {fileID: 6596149124699232353, guid: ad622c656b9f9a946a7d64078d703d56, type: 3}
   pos: {fileID: 1885275363}
+  power: 0
+  powerup: {fileID: 5626571286503050265, guid: b9e5ecc1cf1bcce4c8bf943bf10274a4, type: 3}
 --- !u!95 &1792191523
 Animator:
   serializedVersion: 7
@@ -1214,6 +1220,67 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1001 &1807405337
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868852057474587165, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673584798853450295, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: m_Name
+      value: Boss_body
+      objectReference: {fileID: 0}
+    - target: {fileID: 5541159516295060815, guid: e28875d924d227d41b49e41525085f6f, type: 3}
+      propertyPath: bossbullet
+      value: 
+      objectReference: {fileID: 5822592036576472803, guid: 6229e228834d2c84a968914f84afbc12, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e28875d924d227d41b49e41525085f6f, type: 3}
 --- !u!1 &1885275362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,3 +1321,4 @@ SceneRoots:
   - {fileID: 1792191525}
   - {fileID: 1714023312}
   - {fileID: 851540820}
+  - {fileID: 1807405337}
