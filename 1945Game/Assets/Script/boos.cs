@@ -15,10 +15,20 @@ public class boos : MonoBehaviour
 
     void Start()
     {
+        Invoke("Hide", 2);   //1ÃÊµÚ¿¡ º¸½º¿ö´× ²¨Áà
         StartCoroutine(BossMissle());
         StartCoroutine(CircleFire());
 
     }
+
+
+    void Hide()
+    {
+        GameObject.Find("TextBoss").SetActive(false);
+    }
+
+
+
 
     IEnumerator BossMissle()
     {
