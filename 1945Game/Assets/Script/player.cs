@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class player : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class player : MonoBehaviour
     //·¹ÀÌÁ®
     public GameObject Lazer;
     public float gValue = 0;
+
+    public Image Gage;
 
     void Start()
     {
@@ -65,6 +68,7 @@ public class player : MonoBehaviour
         else if (Input.GetKey(KeyCode.Space))
         {
             gValue += Time.deltaTime;
+            Gage.fillAmount = gValue;
 
             if(gValue >= 1)
             {
@@ -81,6 +85,8 @@ public class player : MonoBehaviour
             {
                 gValue = 0;
             }
+
+            Gage.fillAmount = gValue;
         }
 
             transform.Translate(moveX, moveY, 0);
