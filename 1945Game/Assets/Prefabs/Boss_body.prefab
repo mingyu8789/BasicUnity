@@ -278,8 +278,10 @@ GameObject:
   - component: {fileID: 1868852057474587165}
   - component: {fileID: 1815732453451951336}
   - component: {fileID: 3842632751649240485}
+  - component: {fileID: 3377636906709169827}
   - component: {fileID: 7768776133410151557}
   - component: {fileID: 2321721116383057970}
+  - component: {fileID: 5344201893661457797}
   m_Layer: 0
   m_Name: Boss_body
   m_TagString: boss
@@ -386,6 +388,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3377636906709169827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673584798853450295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993dcf6e87351534d8173ba309ce461b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &7768776133410151557
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -448,6 +462,59 @@ MonoBehaviour:
   mb2: {fileID: 5822592036576472803, guid: 6229e228834d2c84a968914f84afbc12, type: 3}
   pos1: {fileID: 795208309765038389}
   pos2: {fileID: 4224799416639634567}
+--- !u!114 &5344201893661457797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673584798853450295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 2
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 1, y: -1, z: 0}
 --- !u!1 &2894962382888174500
 GameObject:
   m_ObjectHideFlags: 0
