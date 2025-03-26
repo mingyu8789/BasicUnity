@@ -91,7 +91,7 @@ AnimationClip:
   - time: 0.083333336
     functionName: AttSlash
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 3041649664415174459, guid: 17edf52f414698b48a7ea15a0a073057, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
