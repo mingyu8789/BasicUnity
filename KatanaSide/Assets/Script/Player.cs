@@ -39,7 +39,8 @@ public class Player : MonoBehaviour
     float isRight = 1;
 
 
-    public GameObject walldust;   
+    public GameObject walldust;
+
 
     void Start()
     {
@@ -170,6 +171,7 @@ public class Player : MonoBehaviour
 
                 sp.flipX = sp.flipX == false ? true : false;
                 isRight = -isRight;
+                
             }
 
         }
@@ -210,9 +212,9 @@ public class Player : MonoBehaviour
             else
             {
                 //떨어지고 있다
-                if (!isWall)
+                if(!isWall)
                 {
-                    //그냥 떨어지는 중
+                    //그냥 떨어지는중
                     pAnimator.SetBool("Jump", true);
                 }
                 else
@@ -222,8 +224,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-
     }
 
 
@@ -288,26 +288,32 @@ public class Player : MonoBehaviour
     //흙먼지
     public void RandDust(GameObject dust)
     {
+
+
+
         Instantiate(dust, transform.position +new Vector3(-0.114f,-0.467f,0), Quaternion.identity);
+
+
+
+
     }
-
-
 
     //점프먼지
     public void JumpDust()
     {
-        if (!isWall)
+        if(!isWall)
         {
-            Instantiate(Jdust, transform.position, Quaternion.identity);    //벽이 아니라면
+            Instantiate(Jdust, transform.position, Quaternion.identity);
+            Debug.Log("점프먼지 생성중이야");
         }
         else
         {
             //벽먼지
-            Instantiate(walldust, transform.position, Quaternion.identity);
+            //Instantiate(walldust, transform.position, Quaternion.identity);
+            //Debug.Log("나벽먼지 생성중이야");
         }
 
-
-
+      
     }
 
     //벽점프
