@@ -37,7 +37,9 @@ public class Player : MonoBehaviour
     public float wallJumpPower;
     public bool isWallJump;
     float isRight = 1;
-       
+
+
+    public GameObject walldust;   
 
     void Start()
     {
@@ -159,6 +161,8 @@ public class Player : MonoBehaviour
             {
                 isWallJump = true;
                 //벽점프 먼지
+                GameObject go = Instantiate(walldust, transform.position + new Vector3(0.8f * isRight, 0, 0), Quaternion.identity);
+                go.GetComponent<SpriteRenderer>().flipX = sp.flipX;
 
                 Invoke("FreezeX", 0.3f);
                 //물리
@@ -288,9 +292,22 @@ public class Player : MonoBehaviour
     }
 
 
+
+    //점프먼지
     public void JumpDust()
     {
-        Instantiate(Jdust, transform.position, Quaternion.identity);
+        if (!isWall)
+        {
+            Instantiate(Jdust, transform.position, Quaternion.identity);    //벽이 아니라면
+        }
+        else
+        {
+            //벽먼지
+            Instantiate(walldust, transform.position, Quaternion.identity);
+        }
+
+
+
     }
 
     //벽점프
