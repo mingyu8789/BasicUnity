@@ -3,23 +3,41 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("ÇÃ·¹ÀÌ¾î ¼Ó¼º")]
+    [Header("í”Œë ˆì´ì–´ ì†ì„±")]
     public float speed = 5;
     public float jumpUp = 1;
     public float power = 5;
     public Vector3 direction;
     public GameObject slash;
 
-    //±×¸²ÀÚ
+    //ê·¸ë¦¼ì
     public GameObject Shadow1;
     List<GameObject> sh = new List<GameObject>();
 
-    //È÷Æ® ÀÌÆåÆ®
+    //íˆíŠ¸ ì´í™íŠ¸
     public GameObject hit_lazer;
 
+
+
+
+    bool bJump = false;
     Animator pAnimator;
     Rigidbody2D pRig2D;
     SpriteRenderer sp;
+
+    public GameObject Jdust;
+
+
+    //ë²½ì í”„
+    public Transform wallChk;
+    public float wallchkDistance;
+    public LayerMask wLayer;
+    bool isWall;
+    public float slidingSpeed;
+    public float wallJumpPower;
+    public bool isWallJump;
+    float isRight = 1;
+       
 
     void Start()
     {
@@ -33,13 +51,17 @@ public class Player : MonoBehaviour
 
     void KeyInput()
     {
-        direction.x = Input.GetAxisRaw("Horizontal"); //¿ŞÂÊÀº -1   0   1
+        direction.x = Input.GetAxisRaw("Horizontal"); //ì™¼ìª½ì€ -1   0   1
 
         if(direction.x <0)
         {
             //left
             sp.flipX = true;
             pAnimator.SetBool("Run", true);
+
+            //ì í”„ë²½ì¡ê¸° ë°©í–¥
+            isRight = -1;
+
 
             //Shadowflip
             for(int i =0; i<sh.Count; i++)
@@ -54,6 +76,7 @@ public class Player : MonoBehaviour
             sp.flipX = false;
             pAnimator.SetBool("Run", true);
 
+            isRight = 1;
 
             //Shadowflip
             for (int i = 0; i < sh.Count; i++)
@@ -70,8 +93,8 @@ public class Player : MonoBehaviour
 
             for (int i = 0; i < sh.Count; i++)
             {
-                Destroy(sh[i]); //°ÔÀÓ¿ÀºêÁ§Æ®Áö¿ì±â
-                sh.RemoveAt(i); //°ÔÀÓ¿ÀºêÁ§Æ® °ü¸®ÇÏ´Â ¸®½ºÆ®Áö¿ì±â
+                Destroy(sh[i]); //ê²Œì„ì˜¤ë¸Œì íŠ¸ì§€ìš°ê¸°
+                sh.RemoveAt(i); //ê²Œì„ì˜¤ë¸Œì íŠ¸ ê´€ë¦¬í•˜ëŠ” ë¦¬ìŠ¤íŠ¸ì§€ìš°ê¸°
             }
 
 
@@ -81,10 +104,11 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonDown(0)) //0¹ø ¿ŞÂÊ¸¶¿ì½º
+        if (Input.GetMouseButtonDown(0)) //0ë²ˆ ì™¼ìª½ë§ˆìš°ìŠ¤
         {
             pAnimator.SetTrigger("Attack");
-            Instantiate(hit_lazer,transform.position,Quaternion.identity);
+            Instantiate(hit_lazer, transform.position, Quaternion.identity);
+
         }
 
 
@@ -95,26 +119,79 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-        KeyInput();
-        Move();
+
+        if(!isWallJump)
+        {
+            KeyInput();
+            Move();
+        }
+       
+
+
+        //ë²½ì¸ì§€ ì²´í¬
+        isWall = Physics2D.Raycast(wallChk.position, Vector2.right * isRight, wallchkDistance, wLayer);
+        pAnimator.SetBool("Grab", isWall);
+
+
+
+
 
         if(Input.GetKeyDown(KeyCode.W))
         {
-            if(pAnimator.GetBool("Jump") ==false)
+            if(pAnimator.GetBool("Jump")==false)
             {
                 Jump();
                 pAnimator.SetBool("Jump", true);
+                JumpDust();
             }
           
         }
 
+
+
+        if(isWall)
+        {
+            isWallJump = false;
+            //ë²½ì í”„ìƒíƒœ
+            pRig2D.linearVelocity = new Vector2(pRig2D.linearVelocityX, pRig2D.linearVelocityY * slidingSpeed);
+            //ë²½ì„ ì¡ê³ ìˆëŠ” ìƒíƒœì—ì„œ ì í”„
+            if(Input.GetKeyDown(KeyCode.W))
+            {
+                isWallJump = true;
+                //ë²½ì í”„ ë¨¼ì§€
+
+                Invoke("FreezeX", 0.3f);
+                //ë¬¼ë¦¬
+                pRig2D.linearVelocity = new Vector2(-isRight * wallJumpPower, 0.9f * wallJumpPower);
+
+                sp.flipX = sp.flipX == false ? true : false;
+                isRight = -isRight;
+            }
+
+        }
+
     }
+
+
+    void FreezeX()
+    {
+        isWallJump = false;
+    }
+
+
+
+
+
+
+
+
+
 
     private void FixedUpdate()
     {
         Debug.DrawRay(pRig2D.position, Vector3.down, new Color(0, 1, 0));
 
-        //·¹ÀÌÄ³½ºÆ®·Î ¶¥Ã¼Å© 
+        //ë ˆì´ìºìŠ¤íŠ¸ë¡œ ë•…ì²´í¬ 
         RaycastHit2D rayHit = Physics2D.Raycast(pRig2D.position, Vector3.down, 1, LayerMask.GetMask("Ground"));
 
         if(pRig2D.linearVelocityY < 0)
@@ -124,6 +201,20 @@ public class Player : MonoBehaviour
                 if(rayHit.distance <0.7f)
                 {
                     pAnimator.SetBool("Jump", false);
+                }
+            }
+            else
+            {
+                //ë–¨ì–´ì§€ê³  ìˆë‹¤
+                if (!isWall)
+                {
+                    //ê·¸ëƒ¥ ë–¨ì–´ì§€ëŠ” ì¤‘
+                    pAnimator.SetBool("Jump", true);
+                }
+                else
+                {
+                    //ë²½íƒ€ê¸°
+                    pAnimator.SetBool("Grab", true);
                 }
             }
         }
@@ -158,11 +249,11 @@ public class Player : MonoBehaviour
 
     public void AttSlash()
     {
-        //ÇÃ·¹ÀÌ¾î ¿À¸¥ÂÊ
+        //í”Œë ˆì´ì–´ ì˜¤ë¥¸ìª½
         if(sp.flipX == false)
         {
             pRig2D.AddForce(Vector2.right * power, ForceMode2D.Impulse);
-            //ÇÃ·¹ÀÌ¾î ¿À¸¥ÂÊ
+            //í”Œë ˆì´ì–´ ì˜¤ë¥¸ìª½
             GameObject go = Instantiate(slash, transform.position, Quaternion.identity);
             //go.GetComponent<SpriteRenderer>().flipX = sp.flipX;
         }
@@ -170,23 +261,45 @@ public class Player : MonoBehaviour
         {
 
             pRig2D.AddForce(Vector2.left * power, ForceMode2D.Impulse);
-            //¿ŞÂÊ
+            //ì™¼ìª½
             GameObject go = Instantiate(slash, transform.position, Quaternion.identity);
             //go.GetComponent<SpriteRenderer>().flipX = sp.flipX;
         }   
 
     }
 
-    //±×¸²ÀÚ
+    //ê·¸ë¦¼ì
     public void RunShadow()
     {
         if(sh.Count<6)
         {
             GameObject go = Instantiate(Shadow1, transform.position, Quaternion.identity);
-            go.GetComponent<Shadow>().TwSpeed = 10 - sh.Count;
+            go.GetComponent<Shadow>().TwSpeed = 10 - sh.Count; 
             sh.Add(go);
         }
     }
+
+
+
+    //í™ë¨¼ì§€
+    public void RandDust(GameObject dust)
+    {
+        Instantiate(dust, transform.position +new Vector3(-0.114f,-0.467f,0), Quaternion.identity);
+    }
+
+
+    public void JumpDust()
+    {
+        Instantiate(Jdust, transform.position, Quaternion.identity);
+    }
+
+    //ë²½ì í”„
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(wallChk.position, Vector2.right * isRight * wallchkDistance);
+    }
+
 
 
 
