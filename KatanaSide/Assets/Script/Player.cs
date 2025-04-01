@@ -1,26 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    [Header("í”Œë ˆì´ì–´ ì†ì„±")]
+     [Header("?”Œ? ˆ?´?–´ ?†?„±")]
     public float speed = 5;
     public float jumpUp = 1;
     public float power = 5;
     public Vector3 direction;
     public GameObject slash;
 
-    //ê·¸ë¦¼ì
+    //ê·¸ë¦¼?
     public GameObject Shadow1;
     List<GameObject> sh = new List<GameObject>();
 
-    //íˆíŠ¸ ì´í™íŠ¸
+    //?ˆ?Š¸ ?´?™?Š¸
     public GameObject hit_lazer;
 
 
 
 
-    bool bJump = false;
     Animator pAnimator;
     Rigidbody2D pRig2D;
     SpriteRenderer sp;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     public GameObject Jdust;
 
 
-    //ë²½ì í”„
+    //ë²½ì ?”„
     public Transform wallChk;
     public float wallchkDistance;
     public LayerMask wLayer;
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 
     void KeyInput()
     {
-        direction.x = Input.GetAxisRaw("Horizontal"); //ì™¼ìª½ì€ -1   0   1
+        direction.x = Input.GetAxisRaw("Horizontal"); //?™¼ìª½ì?? -1   0   1
 
         if(direction.x <0)
         {
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
             sp.flipX = true;
             pAnimator.SetBool("Run", true);
 
-            //ì í”„ë²½ì¡ê¸° ë°©í–¥
+            //? ?”„ë²½ì¡ê¸? ë°©í–¥
             isRight = -1;
 
 
@@ -96,8 +96,8 @@ public class Player : MonoBehaviour
 
             for (int i = 0; i < sh.Count; i++)
             {
-                Destroy(sh[i]); //ê²Œì„ì˜¤ë¸Œì íŠ¸ì§€ìš°ê¸°
-                sh.RemoveAt(i); //ê²Œì„ì˜¤ë¸Œì íŠ¸ ê´€ë¦¬í•˜ëŠ” ë¦¬ìŠ¤íŠ¸ì§€ìš°ê¸°
+                Destroy(sh[i]); //ê²Œì„?˜¤ë¸Œì ?Š¸ì§??š°ê¸?
+                sh.RemoveAt(i); //ê²Œì„?˜¤ë¸Œì ?Š¸ ê´?ë¦¬í•˜?Š” ë¦¬ìŠ¤?Š¸ì§??š°ê¸?
             }
 
 
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonDown(0)) //0ë²ˆ ì™¼ìª½ë§ˆìš°ìŠ¤
+        if (Input.GetMouseButtonDown(0)) //0ë²? ?™¼ìª½ë§ˆ?š°?Š¤
         {
             pAnimator.SetTrigger("Attack");
             Instantiate(hit_lazer, transform.position, Quaternion.identity);
@@ -122,7 +122,13 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-
+        
+        //?‹œê°? ì¡°ì ˆ ?…? ¥ ì²´í¬ (?™¼ìª? ?‹œ?”„?Š¸ ?‚¤ë¥? ?ˆ„ë¥´ë©´ ?Š¬ë¡œìš° ëª¨ì…˜ ?‹œ?‘)
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            //?¬?Š¤?Š¸?”„ë¡œì„¸?‹± ?™”ë©´íš¨ê³?
+            TimeController.Instance.SetSlowMotion(true); //?Š¬ë¡œìš° ëª¨ì…˜ ?‹œ?‘
+        }
         if(!isWallJump)
         {
             KeyInput();
@@ -131,7 +137,7 @@ public class Player : MonoBehaviour
        
 
 
-        //ë²½ì¸ì§€ ì²´í¬
+        //ë²½ì¸ì§? ì²´í¬
         isWall = Physics2D.Raycast(wallChk.position, Vector2.right * isRight, wallchkDistance, wLayer);
         pAnimator.SetBool("Grab", isWall);
 
@@ -155,13 +161,13 @@ public class Player : MonoBehaviour
         if(isWall)
         {
             isWallJump = false;
-            //ë²½ì í”„ìƒíƒœ
+            //ë²½ì ?”„?ƒ?ƒœ
             pRig2D.linearVelocity = new Vector2(pRig2D.linearVelocityX, pRig2D.linearVelocityY * slidingSpeed);
-            //ë²½ì„ ì¡ê³ ìˆëŠ” ìƒíƒœì—ì„œ ì í”„
+            //ë²½ì„ ?¡ê³ ìˆ?Š” ?ƒ?ƒœ?—?„œ ? ?”„
             if(Input.GetKeyDown(KeyCode.W))
             {
                 isWallJump = true;
-                //ë²½ì í”„ ë¨¼ì§€
+                //ë²½ì ?”„ ë¨¼ì??
                 GameObject go = Instantiate(walldust, transform.position + new Vector3(0.8f * isRight, 0, 0), Quaternion.identity);
                 go.GetComponent<SpriteRenderer>().flipX = sp.flipX;
 
@@ -186,48 +192,52 @@ public class Player : MonoBehaviour
 
 
 
+   
 
 
 
 
+
+    private const float GROUND_CHECK_DISTANCE = 0.7f;
 
 
 
     private void FixedUpdate()
-    {
-        Debug.DrawRay(pRig2D.position, Vector3.down, new Color(0, 1, 0));
+ {
+     Debug.DrawRay(pRig2D.position, Vector3.down, new Color(0, GROUND_CHECK_DISTANCE, 0));
 
-        //ë ˆì´ìºìŠ¤íŠ¸ë¡œ ë•…ì²´í¬ 
-        RaycastHit2D rayHit = Physics2D.Raycast(pRig2D.position, Vector3.down, 1, LayerMask.GetMask("Ground"));
+     //? ˆ?´ìºìŠ¤?Š¸ë¡? ?•…ì²´í¬ 
+     RaycastHit2D rayHit = Physics2D.Raycast(pRig2D.position, Vector3.down, GROUND_CHECK_DISTANCE, LayerMask.GetMask("Ground"));
 
-        if(pRig2D.linearVelocityY < 0)
-        {
-            if(rayHit.collider != null)
-            {
-                if(rayHit.distance <0.7f)
-                {
-                    pAnimator.SetBool("Jump", false);
-                }
-            }
-            else
-            {
-                //ë–¨ì–´ì§€ê³  ìˆë‹¤
-                if(!isWall)
-                {
-                    //ê·¸ëƒ¥ ë–¨ì–´ì§€ëŠ”ì¤‘
-                    pAnimator.SetBool("Jump", true);
-                }
-                else
-                {
-                    //ë²½íƒ€ê¸°
-                    pAnimator.SetBool("Grab", true);
-                }
-            }
-        }
-    }
+     CheckGroundedState(rayHit);
+ }
 
 
+ void CheckGroundedState(RaycastHit2D rayHit)
+ {
 
+     bool isGrounded = rayHit.collider != null && rayHit.distance < GROUND_CHECK_DISTANCE;
+    
+     if (isGrounded)
+     {
+             pAnimator.SetBool("Jump", false);                
+     }
+     else
+     {
+         //?–¨?–´ì§?ê³? ?ˆ?‹¤
+         if (!isWall)
+         {
+             //ê·¸ëƒ¥ ?–¨?–´ì§??Š”ì¤?
+             pAnimator.SetBool("Jump", true);
+         }
+         else
+         {
+             //ë²½í??ê¸?
+             pAnimator.SetBool("Grab", true);
+         }
+     }   
+     
+ }
 
 
 
@@ -253,11 +263,11 @@ public class Player : MonoBehaviour
 
     public void AttSlash()
     {
-        //í”Œë ˆì´ì–´ ì˜¤ë¥¸ìª½
+        //?”Œ? ˆ?´?–´ ?˜¤ë¥¸ìª½
         if(sp.flipX == false)
         {
             pRig2D.AddForce(Vector2.right * power, ForceMode2D.Impulse);
-            //í”Œë ˆì´ì–´ ì˜¤ë¥¸ìª½
+            //?”Œ? ˆ?´?–´ ?˜¤ë¥¸ìª½
             GameObject go = Instantiate(slash, transform.position, Quaternion.identity);
             //go.GetComponent<SpriteRenderer>().flipX = sp.flipX;
         }
@@ -265,14 +275,14 @@ public class Player : MonoBehaviour
         {
 
             pRig2D.AddForce(Vector2.left * power, ForceMode2D.Impulse);
-            //ì™¼ìª½
+            //?™¼ìª?
             GameObject go = Instantiate(slash, transform.position, Quaternion.identity);
             //go.GetComponent<SpriteRenderer>().flipX = sp.flipX;
         }   
 
     }
 
-    //ê·¸ë¦¼ì
+    //ê·¸ë¦¼?
     public void RunShadow()
     {
         if(sh.Count<6)
@@ -285,7 +295,7 @@ public class Player : MonoBehaviour
 
 
 
-    //í™ë¨¼ì§€
+    //?™ë¨¼ì??
     public void RandDust(GameObject dust)
     {
 
@@ -298,32 +308,38 @@ public class Player : MonoBehaviour
 
     }
 
-    //ì í”„ë¨¼ì§€
+    //? ?”„ë¨¼ì??
     public void JumpDust()
     {
         if(!isWall)
         {
             Instantiate(Jdust, transform.position, Quaternion.identity);
-            Debug.Log("ì í”„ë¨¼ì§€ ìƒì„±ì¤‘ì´ì•¼");
+            Debug.Log("? ?”„ë¨¼ì?? ?ƒ?„±ì¤‘ì´?•¼");
         }
         else
         {
-            //ë²½ë¨¼ì§€
+            //ë²½ë¨¼ì§?
             //Instantiate(walldust, transform.position, Quaternion.identity);
-            //Debug.Log("ë‚˜ë²½ë¨¼ì§€ ìƒì„±ì¤‘ì´ì•¼");
+            //Debug.Log("?‚˜ë²½ë¨¼ì§? ?ƒ?„±ì¤‘ì´?•¼");
         }
 
       
     }
 
-    //ë²½ì í”„
+    //ë²½ì ?”„
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(wallChk.position, Vector2.right * isRight * wallchkDistance);
     }
 
-
-
-
+   private void OnTriggerEnter2D(Collider2D other)
+ {
+     //º¸½º ¾À ÁøÀÔ Æ÷Å»°ú Ãæµ¹ Ã¼Å©
+     if(other.CompareTag("BossScene"))
+     {
+         //º¸½º ¾ÀÀ¸·Î ÀüÈ¯
+         SceneManager.LoadScene("Boss");
+     }
+ }
 }

@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class Enemy_Misslie : MonoBehaviour
+public class EnemyMissile : MonoBehaviour
 {
-    public float speed = 5f;    //¹Ì»çÀÏ ¼Óµµ
-    public float lifeTime = 3f; //¹Ì»çÀÏ »ıÁ¸ ½Ã°£
-    public int damage = 10;     //¹Ì»çÀÏ µ¥¹ÌÁö
-    private Vector2 direction;  //¹Ì»çÀÏ ÀÌµ¿ ¹æÇâ
-
+    public float speed = 5f;    //ë¯¸ì‚¬?¼ ?†?„
+    public float lifeTime = 3f; //ë¯¸ì‚¬?¼ ?ƒì¡? ?‹œê°?
+    public int damage = 10;     //ë¯¸ì‚¬?¼ ?°ë¯¸ì??
+    private Vector2 direction;  //ë¯¸ì‚¬?¼ ?´?™ ë°©í–¥
+   
 
     void Start()
     {
-        Destroy(gameObject, lifeTime);  //ÀÏÁ¤ ½Ã°£ ÈÄ ¹Ì»çÀÏ Á¦°Å     
+        Destroy(gameObject, lifeTime);  //?¼? • ?‹œê°? ?›„ ë¯¸ì‚¬?¼ ? œê±?     
     }
 
     public void SetDirection(Vector2 dir)
@@ -18,19 +18,40 @@ public class Enemy_Misslie : MonoBehaviour
         direction = dir.normalized;
     }
 
+    public Vector2 GetDirection()
+    {
+        return direction;
+    }
+
+
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        float timeScale = TimeController.Instance.GetTimeScale();
+        transform.Translate(direction * speed * Time.deltaTime* timeScale);
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
-            //¿©±â¿¡ ÇÃ·¹ÀÌ¾î µ¥¹ÌÁö ·ÎÁ÷ Ãß°¡
+            //?—¬ê¸°ì— ?”Œ? ˆ?´?–´ ?°ë¯¸ì?? ë¡œì§ ì¶”ê??
+            Destroy(gameObject);
+        }//? ê³? ì¶©ëŒ?–ˆ?„?•Œ
+        else if(other.CompareTag("Enemy"))
+        {
+            ShootingEnemy enemy = other.GetComponent<ShootingEnemy>();
+            if(enemy != null)
+            {
+                enemy.PlayDeathAnimation();
+            }
+
+            //ë¯¸ì‚¬?¼ ? œê±?
             Destroy(gameObject);
         }
     }
+
+
+
 }

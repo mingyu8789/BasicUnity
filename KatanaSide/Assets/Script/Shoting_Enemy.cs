@@ -1,67 +1,77 @@
 using UnityEngine;
 
-public class Shoting_Enemy : MonoBehaviour
+public class ShootingEnemy : MonoBehaviour
 {
-    [Header("Àû Ä³¸¯ÅÍ ¼Ó¼º")]
-    public float detctionRange = 10f;   //ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÒ ¼ö ÀÖ´Â ÃÖ´ë °Å¸®
-    public float shootingInterval = 2f; //¹Ì»çÀÏ ¹ß»ç »çÀÌÀÇ ´ë±â ½Ã°£
-    public GameObject missilePrefab;    //¹Ù»çÇÒ ¹Ì»çÀÏ ÇÁ¸®ÆÕ
-    [Header("ÂüÁ¶ ÄÄÆ÷³ÍÆ®")]
-    public Transform firePoint; //¹Ì»çÀÏÀÌ ¹ß»çµÉ À§Ä¡
-    private Transform player;   //ÇÃ·¹À×¾îÀÇ À§Ä¡ Á¤º¸
-    private float shootTimer;   //¹ß»ç Å¸ÀÌ¸Ó
-    private SpriteRenderer spriteRenderer; //½ºÇÁ¶óÀÌÆ® ¹æÇâ ÀüÈ¯¿ë
+    [Header("ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½")]
+    public float detctionRange = 10f;   //ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ö´ï¿½ ï¿½Å¸ï¿½
+    public float shootingInterval = 2f; //ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public GameObject missilePrefab;    //ï¿½Ù»ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
+    public Transform firePoint; //ï¿½Ì»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ ï¿½ï¿½Ä¡
+    private Transform player;   //ï¿½Ã·ï¿½ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+    private float shootTimer;   //ï¿½ß»ï¿½ Å¸ï¿½Ì¸ï¿½
+    private SpriteRenderer spriteRenderer; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½
+    private Animator animator; //ì• ë‹ˆë©”ì´ì…˜ ì»¨íŠ¸ë¡¤ëŸ¬
 
 
     void Start()
     {
-        //ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        //ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        shootTimer = shootingInterval;  //Å¸ÀÌ¸Ó ÃÖ±âÈ­
+        shootTimer = shootingInterval;  //Å¸ï¿½Ì¸ï¿½ ï¿½Ö±ï¿½È­
+        animator = GetComponent<Animator>(); //ì• ë‹ˆë©”ì´ì…˜ ì»¨íŠ¸ë¡¤ëŸ¬
     }
 
 
     void Update()
     {
-        if (player == null) return; //ÇÃ·¹ÀÌ¾î°¡ ¾øÀ¸¸é ·ÎÁ÷À» ¼öÇàÇÏÁö ¾ÊÀ½
+        if (player == null) return; //ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        //ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸® °è»ê
+        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= detctionRange)
         {
-            //ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ½ºÇÁ¶óÀÌÆ® È¸Àü
+            //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È¸ï¿½ï¿½
             spriteRenderer.flipX = (player.position.x < transform.position.x);
 
-            //¹Ì»çÀÏ ¹ß»ç ·ÎÁ÷
-            shootTimer -= Time.deltaTime;   //Å¸ÀÌ¸Ó °¨¼Ò
+            //ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
+            shootTimer -= Time.deltaTime;   //Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             if (shootTimer <= 0)
             {
-                Shoot(); //¹Ì»çÀÏ ¹ß»ç
-                shootTimer = shootingInterval; //Å¸ÀÌ¸Ó ÃÊ±âÈ­
+                Shoot(); //ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
+                shootTimer = shootingInterval; //Å¸ï¿½Ì¸ï¿½ ï¿½Ê±ï¿½È­
             }
         }
     }
 
 
-        //¹Ì»çÀÏ ¹ß»ç ÇÔ¼ö
+        //ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½Ô¼ï¿½
         void Shoot()
         {
-            //¹Ì»çÀÏ »ı¼º
+            //ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameObject missile = Instantiate(missilePrefab, firePoint.position, Quaternion.identity);
 
-            //ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ¹ß»ç ¹æÇâ ¼³Á¤
+            //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Vector2 direction = (player.position - firePoint.position).normalized;
-            missile.GetComponent<Enemy_Misslie>().SetDirection(direction);
+            missile.GetComponent<EnemyMissile>().SetDirection(direction);
             missile.GetComponent<SpriteRenderer>().flipX = (player.position.x < transform.position.x);
         }
 
-    //µğ¹ö±ë¿ë ±âÁî¸ğ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detctionRange);
+    }
+
+    //ì  ìºë¦­í„° ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
+    public void PlayDeathAnimation()
+    {
+        animator.SetBool("Death", true);
+        //ì„ íƒì‚¬í•­ : ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œí›„ ì˜¤ë¸Œì íŠ¸ ì œê±°ë¥¼ ìœ„í•´
+        Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0).Length);
     }
 }
